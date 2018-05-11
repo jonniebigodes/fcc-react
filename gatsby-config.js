@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'freeCodeCamp React Challenges',
   },
-  plugins: ['gatsby-plugin-react-helmet'],
+  pathPrefix: `/fcc-react`,
+  plugins: ['gatsby-plugin-react-helmet','gatsby-plugin-react-next']
 }
