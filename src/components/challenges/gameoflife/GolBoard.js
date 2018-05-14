@@ -5,12 +5,9 @@ import GolCell from './GolCell';
 
 const styles = theme => ({
     root: {
-      display: 'flex',
-      /* flex: 'calc(100%/20)', */
-      alignContent:'center',
-      alignItems:'center',
-      flexDirection:'row',
-      flexWrap:'wrap'
+      display:'grid',
+      gridTemplateColumns:'repeat(20,1fr)',
+      gridTemplateRows:'repeat(20,1fr)'
     },
     buttons: {
       margin: theme.spacing.unit,
@@ -21,7 +18,7 @@ class GolBoard extends Component{
         const {board,classes}= this.props;
         const gameBoard=board.map(item=>{
             return item.map(cell=>{
-                return (<GolCell data={cell}/>)
+                return (<GolCell data={cell} key={cell.cell} boardSize={item.length}/>)
             })
         })
         return(

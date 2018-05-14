@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
@@ -10,15 +11,13 @@ const styles = theme => ({
   root: {
     margin: '0 auto',
   },
-  textInfo: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-    width: 370,
+  title:{
+    marginTop:theme.spacing.unit,
+    marginBottom:theme.spacing.unit*2
   },
   paperMarkDown: {
     width: 400,
-    height: 400,
+    height: 300,
   },
 })
 class MarkDownContainer extends Component {
@@ -48,6 +47,12 @@ class MarkDownContainer extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
+        <div className={classes.title}>
+          <Typography component="p" ariant="title" gutterBottom align="center">
+                Super Duper Markdown Previewer 
+          </Typography>
+        </div>
+        
         <Grid container spacing={40} justify="center" direction="row">
           <Grid item xs={12} sm={6}>
             <TextField
@@ -56,7 +61,7 @@ class MarkDownContainer extends Component {
               value={content}
               fullWidth
               multiline
-              rows={18}
+              rows={8}
               rowsMax={32}
               onChange={this.handleText}
             />

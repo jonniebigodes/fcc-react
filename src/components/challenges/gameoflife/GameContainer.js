@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
@@ -8,14 +9,17 @@ import GolBoard from './GolBoard';
 const styles = theme => ({
   root: {
     display: 'flex',
-    
+      /* flex: 'calc(100%/20)', */
+      alignContent:'center',
+      alignItems:'center',
+      flexDirection:'column',
   },
   buttons: {
     margin: theme.spacing.unit,
   },
 })
 class GameContainer extends Component {
-
+  // #region component methods
   state={
     board:[],
     rows:20,
@@ -33,10 +37,15 @@ class GameContainer extends Component {
       clearInterval(this.timerID);
     }
   }
+  // #endregion
+  
+  // #region speed
   setFastSpeed = () =>this.setState({gameSpeed:1500});
   setMediumSpeed = () =>this.setState({gameSpeed:3000});
   setSlowSpeed= ()=>this.setState({gameSpeed:8000});
-  
+  // #endregion
+
+  // #region board size
   setSmallBoard = ()=>{
     this.setState({ rows: 20,cols:20 });
     this.createBoard(20,20);
@@ -49,6 +58,8 @@ class GameContainer extends Component {
     this.setState({rows:70,cols:50});
     this.createBoard(70,50);
   }
+  // #endregion
+  // #region game actions
   randomSeedNumber=()=> Math.floor(Math.random()*(10000000-1+1)+1)
   createBoard(rows,cols){
 
@@ -63,6 +74,7 @@ class GameContainer extends Component {
     this.setState({board:newBoard});
   }
  
+  
   pauseGame=()=>{
     this.setState({isRunning:false});
     clearInterval(this.timerID);
@@ -77,15 +89,12 @@ class GameContainer extends Component {
     this.createBoard(rows,cols);
   }
   startGame=()=>{
-    console.log('====================================');
-    console.log(`timer start b:${JSON.stringify(this.timerID,null,2)}`);
-    console.log('====================================');
+    
     this.setState({isRunning:true});
     this.timerID= setInterval(()=>this.updateBoard(),this.state.gameSpeed);
-    console.log('====================================');
-    console.log(`timer start:${JSON.stringify(this.timerID,null,2)}`);
-    console.log('====================================');
   }
+
+  
   updateBoard(){
     const oldBoard=[...this.state.board];
     const newboard=oldBoard.map((item,i)=>{
@@ -134,38 +143,16 @@ class GameContainer extends Component {
     result+= board[bottomGrid][borderRightColumn].status;
     return result;
   }
-
+  // #endregion
+  // #region render
   render() {
-    const {board,generation}= this.state;
-    return(
-      <div>
-        <h3>{generation}</h3>
-        <Grid container spacing={16} justify="center" direction="row">
-          <Grid item xs>
-            <Button variant="raised" onClick={this.startGame}
-              color="primary" disabled={this.state.isRunning}>
-              Run
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Button variant="raised" onClick={this.resetHandler}
-              color="primary" disabled={this.state.isRunning}>
-              Reset
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Button variant="raised" onClick={this.pauseGame}
-              color="primary" disabled={!this.state.isRunning}>
-              Pause
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Button variant="raised"
-              color="primary" disabled={this.state.isRunning}>
-              Clear
-            </Button>
-          </Grid>
-        </Grid>
+    const {board}= this.state;
+
+    return (
+      <div className={this.props.classes.root}>
+        <Typography variant="title" gutterBottom>
+            Super Duper Game of life
+        </Typography>
         <Grid container spacing={16} justify="center"direction="row">
           <Grid item xs>
             <GolBoard board={board}/>
@@ -208,10 +195,36 @@ class GameContainer extends Component {
               70x50
             </Button>
           </Grid>
+          <Grid item xs>
+            <Button variant="raised" onClick={this.startGame}
+              color="primary" disabled={this.state.isRunning}>
+              Run
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button variant="raised" onClick={this.resetHandler}
+              color="primary" disabled={this.state.isRunning}>
+              Reset
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button variant="raised" onClick={this.pauseGame}
+              color="primary" disabled={!this.state.isRunning}>
+              Pause
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button variant="raised"
+              color="primary" disabled={this.state.isRunning}>
+              Clear
+            </Button>
+          </Grid>
         </Grid>
       </div>
     );
   }
+
+  // #endregion
 }
 GameContainer.propTypes={
   classes:PropTypes.object.isRequired
