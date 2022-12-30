@@ -6,7 +6,7 @@
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",
     "classnames": "^2.2.5",
-    "gatsby": "^1.9.247",
+    "gatsby": "^5.3.3",
     "gatsby-link": "^1.6.40",
     "gatsby-plugin-google-fonts": "0.0.4",
     "gatsby-plugin-postcss-sass": "^1.0.20",
